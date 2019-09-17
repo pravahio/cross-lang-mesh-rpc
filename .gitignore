@@ -1,0 +1,7 @@
+.DS_Store
+build/
+__pycache__/
+mesh_gtfsr.egg-info
+py/dist/
+mesh_rpc.egg-info/
+*.proto
