@@ -2,7 +2,6 @@ package rmesh
 
 import (
 	"context"
-	"fmt"
 
 	rpc "github.com/pravahio/cross-lang-mesh-rpc/go/rpc"
 	"google.golang.org/grpc"
@@ -17,14 +16,13 @@ func NewMeshRPC() (*MeshRPC, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("no err")
 
 	return &MeshRPC{
 		stub: rpc.NewMeshClient(c),
 	}, nil
 }
 
-func (m *MeshRPC) Subscribe(ctx context.Context, channel string, geospace []string) (rpc.Mesh_SubscribeClient, error) {
+func (m *MeshRPC) Subscribe(ctx context.Context, channel string, geospace []string) (*SubClient, error) {
 	pi := &rpc.PeerTopicInfo{
 		Topics: m.getTopicFromGeospace(channel, geospace),
 	}
@@ -34,7 +32,7 @@ func (m *MeshRPC) Subscribe(ctx context.Context, channel string, geospace []stri
 		return nil, err
 	}
 
-	return sub, nil
+	return &SubClient{sub}, nil
 }
 
 func (m *MeshRPC) getTopicFromGeospace(channel string, geospace []string) []string {
