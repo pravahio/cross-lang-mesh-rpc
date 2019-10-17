@@ -9,6 +9,10 @@ js: *.proto
 	mkdir -p build/js
 	protoc -I=. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:build/js rpc.proto
 
+go: *.proto
+	mkdir -p build/go
+	protoc -I=. --go_out=plugins=grpc:build/go rpc.proto
+
 python-path:
 	export PYTHONPATH="${PWD}/py"
 
