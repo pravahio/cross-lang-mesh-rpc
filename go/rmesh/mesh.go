@@ -49,7 +49,16 @@ func (m *MeshRPC) Publish(ctx context.Context, channel string, geospace []string
 		Topics: m.getTopicFromGeospace(channel, geospace),
 	}
 
-	res, err := m.stub.Publish(ctx, pi)
+	d := &rpc.Data{
+		Raw: data,
+	}
+
+	pd := &rpc.PublishData{
+		Info: pi,
+		Data: d,
+	}
+
+	res, err := m.stub.Publish(ctx, pd)
 
 	return res.GetMessage(), err
 }
