@@ -44,8 +44,7 @@ func (m *MeshRPC) RegisterToPublish(ctx context.Context, channel string, geospac
 
 	return res.GetMessage(), err
 }
-
-func (m *MeshRPC) Publish(ctx context.Context, channel string, geospace []string, data []byte) (string, error) { {
+func (m *MeshRPC) Publish(ctx context.Context, channel string, geospace []string, data []byte) (string, error) {
 	pi := &rpc.PeerTopicInfo{
 		Topics: m.getTopicFromGeospace(channel, geospace),
 	}
