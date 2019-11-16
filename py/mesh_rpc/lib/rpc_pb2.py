@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='rpc',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"-\n\rPeerTopicInfo\x12\x0c\n\x04peer\x18\x01 \x01(\t\x12\x0e\n\x06topics\x18\x02 \x03(\t\"H\n\x0bPublishData\x12 \n\x04info\x18\x01 \x01(\x0b\x32\x12.rpc.PeerTopicInfo\x12\x17\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32\t.rpc.Data\"\x1b\n\x08Response\x12\x0f\n\x07message\x18\x01 \x01(\t\"\"\n\x04\x44\x61ta\x12\r\n\x05topic\x18\x01 \x03(\t\x12\x0b\n\x03raw\x18\x02 \x01(\x0c\x32\x9e\x01\n\x04Mesh\x12\x38\n\x11RegisterToPublish\x12\x12.rpc.PeerTopicInfo\x1a\r.rpc.Response\"\x00\x12,\n\x07Publish\x12\x10.rpc.PublishData\x1a\r.rpc.Response\"\x00\x12.\n\tSubscribe\x12\x12.rpc.PeerTopicInfo\x1a\t.rpc.Data\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"-\n\rPeerTopicInfo\x12\x0c\n\x04peer\x18\x01 \x01(\t\x12\x0e\n\x06topics\x18\x02 \x03(\t\"H\n\x0bPublishData\x12 \n\x04info\x18\x01 \x01(\x0b\x32\x12.rpc.PeerTopicInfo\x12\x17\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32\t.rpc.Data\"\x1b\n\x08Response\x12\x0f\n\x07message\x18\x01 \x01(\t\"\"\n\x04\x44\x61ta\x12\r\n\x05topic\x18\x01 \x03(\t\x12\x0b\n\x03raw\x18\x02 \x01(\x0c\x32\x8e\x02\n\x04Mesh\x12\x38\n\x11RegisterToPublish\x12\x12.rpc.PeerTopicInfo\x1a\r.rpc.Response\"\x00\x12:\n\x13UnregisterToPublish\x12\x12.rpc.PeerTopicInfo\x1a\r.rpc.Response\"\x00\x12,\n\x07Publish\x12\x10.rpc.PublishData\x1a\r.rpc.Response\"\x00\x12.\n\tSubscribe\x12\x12.rpc.PeerTopicInfo\x1a\t.rpc.Data\"\x00\x30\x01\x12\x32\n\x0bUnsubscribe\x12\x12.rpc.PeerTopicInfo\x1a\r.rpc.Response\"\x00\x62\x06proto3')
 )
 
 
@@ -215,7 +215,7 @@ _MESH = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=205,
-  serialized_end=363,
+  serialized_end=475,
   methods=[
   _descriptor.MethodDescriptor(
     name='RegisterToPublish',
@@ -227,9 +227,18 @@ _MESH = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='UnregisterToPublish',
+    full_name='rpc.Mesh.UnregisterToPublish',
+    index=1,
+    containing_service=None,
+    input_type=_PEERTOPICINFO,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='Publish',
     full_name='rpc.Mesh.Publish',
-    index=1,
+    index=2,
     containing_service=None,
     input_type=_PUBLISHDATA,
     output_type=_RESPONSE,
@@ -238,10 +247,19 @@ _MESH = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Subscribe',
     full_name='rpc.Mesh.Subscribe',
-    index=2,
+    index=3,
     containing_service=None,
     input_type=_PEERTOPICINFO,
     output_type=_DATA,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Unsubscribe',
+    full_name='rpc.Mesh.Unsubscribe',
+    index=4,
+    containing_service=None,
+    input_type=_PEERTOPICINFO,
+    output_type=_RESPONSE,
     serialized_options=None,
   ),
 ])
