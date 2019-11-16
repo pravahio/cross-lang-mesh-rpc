@@ -35,6 +35,19 @@ func (m *MeshRPC) Subscribe(ctx context.Context, channel string, geospace []stri
 	return &SubClient{sub}, nil
 }
 
+func (m *MeshRPC) Unsubscribe(ctx context.Context, channel string, geospace []string) (string, error) {
+	pi := &rpc.PeerTopicInfo{
+		Topics: m.getTopicFromGeospace(channel, geospace),
+	}
+
+	res, err := m.stub.Unsubscribe(ctx, pi)
+	if err != nil {
+		return err
+	}
+
+	return res.GetMessage(), err
+}
+
 func (m *MeshRPC) RegisterToPublish(ctx context.Context, channel string, geospace []string) (string, error) {
 	pi := &rpc.PeerTopicInfo{
 		Topics: m.getTopicFromGeospace(channel, geospace),
@@ -44,6 +57,17 @@ func (m *MeshRPC) RegisterToPublish(ctx context.Context, channel string, geospac
 
 	return res.GetMessage(), err
 }
+
+func (m *MeshRPC) UnregisterToPublish(ctx context.Context, channel string, geospace []string) (string, error) {
+	pi := &rpc.PeerTopicInfo{
+		Topics: m.getTopicFromGeospace(channel, geospace),
+	}
+
+	res, err := m.stub.UnregisterToPublish(ctx, pi)
+
+	return res.GetMessage(), err
+}
+
 func (m *MeshRPC) Publish(ctx context.Context, channel string, geospace []string, data []byte) (string, error) {
 	pi := &rpc.PeerTopicInfo{
 		Topics: m.getTopicFromGeospace(channel, geospace),
