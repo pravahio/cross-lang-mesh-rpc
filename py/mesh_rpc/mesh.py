@@ -19,6 +19,14 @@ class MeshRPC:
         s = self.stub.Subscribe(m)
 
         return s
+    
+    def unsubscribe(self, channel, geospace):
+        topicList = getTopicsFromGeospace(channel, geospace)
+
+        m = PeerTopicInfo()
+        m.topics.extend(topicList)
+
+        return self.stub.Unsubscribe(m)
 
     def registerToPublish(self, channel, geospace):
         topicList = getTopicsFromGeospace(channel, geospace)
@@ -28,6 +36,18 @@ class MeshRPC:
 
         try:
             p = self.stub.RegisterToPublish(m)
+            return p
+        except grpc.RpcError as e:
+            raise MeshRPCException(e.details())
+    
+    def unregisterToPublish(self, channel, geospace):
+        topicList = getTopicsFromGeospace(channel, geospace)
+
+        m = PeerTopicInfo()
+        m.topics.extend(topicList)
+
+        try:
+            p = self.stub.UnregisterToPublish(m)
             return p
         except grpc.RpcError as e:
             raise MeshRPCException(e.details())
