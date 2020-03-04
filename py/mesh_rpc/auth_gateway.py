@@ -35,12 +35,12 @@ class AuthGateway(grpc.AuthMetadataPlugin):
         resJSON = res.json()
         err = resJSON.get('error', None)
         if err != None:
-          print('Err in obtaining access token: ' + err)
+          raise Exception('Err in obtaining access token: ' + err)
           return
         
         cnt = resJSON.get('token', None)
         if cnt == None:
-          print('No token found.')
+          raise Exception('No token found.')
           return
 
         callback(((_SIGNATURE_HEADER_KEY, cnt),), None)
