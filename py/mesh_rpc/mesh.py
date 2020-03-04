@@ -4,10 +4,24 @@ from .lib.rpc_pb2 import PeerTopicInfo, PublishData, Data
 from .lib.rpc_pb2_grpc import MeshStub
 from .exp import MeshRPCException
 from .util import getTopicsFromGeospace
+from . import crypto
+from .auth_gateway import AuthGateway
 
 class MeshRPC:
-    def __init__(self, endpoint):
-        c = grpc.insecure_channel(endpoint)
+    def __init__(self, endpoint, auth_token):
+        pem = crypto._load_credential_from_file('ca.rpc.pravah.io.crt')
+        
+        gateway = AuthGateway()
+        gateway.set_auth(auth_token)
+        
+        channel_credential = grpc.ssl_channel_credentials(pem)
+        call_credential = grpc.metadata_call_credentials(gateway, 'Auth Gateway')
+        composite_credentials = grpc.composite_channel_credentials(
+            channel_credential,
+            call_credential
+        )
+        c = grpc.secure_channel(endpoint, composite_credentials)
+        #c = grpc.insecure_channel(endpoint)
         self.stub = MeshStub(c)
 
     def subscribe(self, channel, geospace):
