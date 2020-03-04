@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mesh_rpc",
-    version="0.1.1",
+    version="0.1.2",
     author="Abhishek Upperwal",
     author_email="mesh@soket.in",
     description="RPC library for mesh-pravah",
