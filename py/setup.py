@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mesh_rpc",
-    version="0.0.7",
+    version="0.1.6",
     author="Abhishek Upperwal",
     author_email="mesh@soket.in",
     description="RPC library for mesh-pravah",
@@ -18,6 +18,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    package_data={
+        'mesh_rpc': ['*.crt'],
+    },
+    include_package_data=True,
     install_requires = [
         'grpcio'
     ]
