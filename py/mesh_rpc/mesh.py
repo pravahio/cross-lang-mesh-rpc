@@ -8,7 +8,15 @@ from . import crypto
 from .auth_gateway import AuthGateway
 
 class MeshRPC:
-    def __init__(self, endpoint, auth_token):
+    def __init__(self, endpoint, auth_token, mode='secure'):
+        if mode == 'secure':
+            c = self.secureSecureConnection(endpoint, auth_token)
+        else:
+            c = grpc.insecure_channel(endpoint)
+        
+        self.stub = MeshStub(c)
+    
+    def secureSecureConnection(self, endpoint, auth_token):
         pem = crypto._load_credential_from_file('ca.rpc.pravah.io.crt')
         
         gateway = AuthGateway()
@@ -21,8 +29,8 @@ class MeshRPC:
             call_credential
         )
         c = grpc.secure_channel(endpoint, composite_credentials)
-        #c = grpc.insecure_channel(endpoint)
-        self.stub = MeshStub(c)
+
+        return c
 
     def subscribe(self, channel, geospace):
         topicList = getTopicsFromGeospace(channel, geospace)
