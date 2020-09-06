@@ -27,10 +27,10 @@ class AuthGateway(grpc.AuthMetadataPlugin):
         #     service_url=u'https://localhost:50051/helloworld.Greeter',
         #     method_name=u'SayHello')
         
-        real_path = os.path.join(os.path.dirname(__file__), 'chain.pravah.io.crt')
+        #real_path = os.path.join(os.path.dirname(__file__), 'chain.pravah.io.crt')
         res = requests.post(_auth_host + ':' + _auth_port + '/token', json={
 	        "authentication_token": self.auth_token
-        }, timeout=15, verify=real_path)
+        }, timeout=15, verify=True)
 
         resJSON = res.json()
         err = resJSON.get('error', None)
